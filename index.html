@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GenPoly — Bioresorbable Polymer Suture Coatings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Source Sans 3', sans-serif; font-size: 17px; line-height: 1.75; color: #1a1a1a; background: #fff; }
+    a { color: #1565c0; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+    header { text-align: center; padding: 56px 0 20px; }
+    .venue { display: inline-block; font-size: 14px; font-weight: 600; color: #b71c1c; letter-spacing: .03em; margin-bottom: 18px; }
+    h1 { font-family: 'Lora', serif; font-size: clamp(22px, 4vw, 34px); font-weight: 600; line-height: 1.25; color: #111; margin-bottom: 28px; }
+    .authors { font-size: 16.5px; line-height: 2; margin-bottom: 6px; }
+    .affiliation { font-size: 15px; color: #555; margin-bottom: 24px; }
+
+    .links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
+    .link-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 18px; border: 1.5px solid #bbb; border-radius: 999px; font-size: 14.5px; font-weight: 600; color: #222; background: #fafafa; transition: all .15s; }
+    .link-btn:hover { background: #111; color: #fff; border-color: #111; text-decoration: none; }
+
+    .hero-fig { margin: 8px 0 0; text-align: center; }
+    .hero-placeholder { background: #f7f7f7; border: 1px solid #e0e0e0; border-radius: 6px; padding: 60px 20px; color: #999; font-size: 14px; }
+    figcaption { font-size: 14px; color: #555; line-height: 1.6; margin-top: 10px; text-align: left; }
+    figcaption strong { color: #222; }
+
+    .toc { background: #f7f7f7; border: 1px solid #e2e2e2; border-radius: 6px; padding: 22px 28px; margin: 36px 0; }
+    .toc h3 { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #666; margin-bottom: 12px; }
+    .toc ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 20px; padding: 0; }
+    .toc ul li::before { content: '· '; color: #999; }
+    .toc a { font-size: 15px; }
+
+    section { margin: 48px 0; }
+    section h2 { font-family: 'Lora', serif; font-size: 26px; font-weight: 600; color: #111; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #eee; }
+    section p { margin-bottom: 16px; }
+    section p:last-child { margin-bottom: 0; }
+
+    .highlight-list { list-style: none; padding: 0; margin: 20px 0; }
+    .highlight-list li { padding: 10px 16px 10px 20px; border-left: 3px solid #1565c0; margin-bottom: 10px; background: #f5f8ff; border-radius: 0 4px 4px 0; font-size: 15.5px; }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin: 24px 0; }
+    .stat-card { border: 1px solid #e0e0e0; border-radius: 6px; padding: 20px 16px; text-align: center; }
+    .stat-num { font-family: 'Lora', serif; font-size: 36px; font-weight: 600; color: #b71c1c; line-height: 1; margin-bottom: 6px; }
+    .stat-label { font-size: 13px; color: #555; line-height: 1.45; }
+
+    .pipeline { margin: 24px 0; }
+    .pipeline-step { display: flex; gap: 18px; margin-bottom: 22px; align-items: flex-start; }
+    .step-badge { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: #1565c0; color: #fff; font-size: 13px; font-weight: 600; font-family: 'Source Code Pro', monospace; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+    .step-body strong { display: block; font-size: 15.5px; margin-bottom: 3px; color: #111; }
+    .step-body p { font-size: 14.5px; color: #444; line-height: 1.6; margin: 0; }
+    .tag { display: inline-block; font-family: 'Source Code Pro', monospace; font-size: 11px; color: #1565c0; background: #e8f0fe; padding: 2px 8px; border-radius: 3px; margin-top: 5px; }
+
+    .results-table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 20px 0; }
+    .results-table th { background: #f0f0f0; padding: 10px 14px; text-align: left; font-weight: 600; border: 1px solid #ddd; font-size: 13.5px; }
+    .results-table td { padding: 9px 14px; border: 1px solid #e8e8e8; }
+    .results-table tr:nth-child(even) td { background: #fafafa; }
+    .best { font-weight: 600; color: #1b5e20; }
+
+    figure { margin: 28px 0; text-align: center; }
+    figure img { max-width: 100%; border: 1px solid #e8e8e8; border-radius: 4px; }
+    .fig-placeholder { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 5px; padding: 40px 20px; color: #888; font-size: 14px; }
+
+    .pdf-wrap { border: 1px solid #ddd; border-radius: 6px; overflow: hidden; margin-top: 20px; }
+    .pdf-bar { background: #333; display: flex; align-items: center; justify-content: space-between; padding: 9px 16px; }
+    .pdf-bar span { font-family: 'Source Code Pro', monospace; font-size: 12px; color: rgba(255,255,255,.55); }
+    .pdf-bar a { font-family: 'Source Code Pro', monospace; font-size: 12px; color: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.25); padding: 3px 10px; border-radius: 3px; }
+    .pdf-bar a:hover { color: #fff; text-decoration: none; }
+    iframe.pdf { display: block; width: 100%; height: 800px; border: none; }
+
+    .bibtex { background: #f6f6f6; border: 1px solid #ddd; border-radius: 6px; padding: 20px 24px; font-family: 'Source Code Pro', monospace; font-size: 13.5px; line-height: 1.7; overflow-x: auto; white-space: pre; color: #333; margin-top: 16px; }
+
+    .back-top { display: block; text-align: right; font-size: 13px; color: #999; margin-top: 12px; }
+    .back-top:hover { color: #1565c0; text-decoration: none; }
+
+    hr { border: none; border-top: 1px solid #eee; margin: 48px 0; }
+
+    footer { text-align: center; padding: 32px 0 48px; font-size: 13.5px; color: #888; border-top: 1px solid #eee; }
+
+    @media (max-width: 600px) {
+      body { font-size: 16px; }
+      h1 { font-size: 22px; }
+      iframe.pdf { height: 480px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page" id="top">
+
+  <header>
+    <div class="venue">Accepted &middot; ICLR GEM Workshop 2026</div>
+    <h1>Discovery of Bioresorbable Polymer Suture Coatings for Controlled Tissue Regeneration with Multimodal Foundation Models</h1>
+    <div class="authors">
+      <a href="/cdn-cgi/l/email-protection#e89a898f80899ec69a89858281a88f9a8d8d869f818b809b8b808787849bc6879a8f">Raghav Ramji</a>
+    </div>
+    <div class="affiliation">Greenwich High School</div>
+    <div class="links">
+      <a class="link-btn" href="assets/GenPoly_ICLR_GEM2026.pdf" download>
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        PDF
+      </a>
+      <a class="link-btn" href="https://openreview.net/forum?id=CM3PHnZRg0" target="_blank">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        OpenReview
+      </a>
+      <a class="link-btn" href="#bibtex">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+        BibTeX
+      </a>
+    </div>
+  </header>
+
+  <div class="hero-fig">
+    <figure>
+      <img src="assets/pipeline.jpg" alt="GenPoly Pipeline Overview" style="max-width:100%;border:1px solid #ddd;border-radius:4px;" />
+      <figcaption>
+        <strong>Figure 1.</strong> GenPoly is an end-to-end pipeline for bioresorbable polymer discovery: a multimodal foundation model pretrained over paired PSELFIES strings and molecular graphs, coupled with multi-task property prediction, RAG-based candidate filtering and clustering, and in vitro validation on nanoparticle-loaded silk sutures with a human keratinocyte wound model.
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="toc">
+    <h3>Table of Contents</h3>
+    <ul>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#elisa">ELISA &amp; Immunofluorescence</a></li>
+      <li><a href="#discussion">Discussion</a></li>
+      <li><a href="#paper">Full Paper</a></li>
+      <li><a href="#bibtex">BibTeX</a></li>
+    </ul>
+  </div>
+
+  <section id="intro">
+    <h2>Introduction</h2>
+    <p>Therapeutic sutures can localize bioactive payloads directly to wound sites, offering a compelling alternative to systemic delivery. However, <strong>burst release</strong>&mdash;the rapid, uncontrolled efflux of payload upon implantation&mdash;overwhelms cell differentiation cascades, while mechanically fragile coatings lose shape integrity, both increasing infection susceptibility and impairing healing.</p>
+    <p>State-of-the-art suture coatings rely predominantly on poly(lactide-co-glycolide) (PLGA) and related linear aliphatic polyesters (PGA, PLA). While their biocompatibility and biodegradability are well-established, the combinatorial space of candidate polymers is vast, and systematic exploration beyond this narrow family has remained limited.</p>
+    <p>We introduce <strong>GenPoly</strong>, an end-to-end data-driven framework for bioresorbable polymer discovery. Starting from PLGA as a clinically prevalent baseline, GenPoly:</p>
+    <ul class="highlight-list">
+      <li>Trains a <strong>multimodal foundation model</strong> jointly over polymer SELFIES strings and molecular graphs via contrastive alignment (CLIP-style InfoNCE).</li>
+      <li>Performs <strong>multi-task property prediction</strong> over 8 physical and electronic properties from DFT-derived labels (Khazana dataset).</li>
+      <li>Identifies candidate coatings via <strong>latent-space nearest-neighbor search</strong> and synthetic accessibility filtering.</li>
+      <li>Clusters candidates using a <strong>RAG pipeline</strong> (GPT-5 + Weaviate) into 8 interpretable polymer families.</li>
+      <li>Validates top candidates in an <strong>in vitro human keratinocyte wound model</strong> using nanoparticle-loaded silk sutures with rhEGF payload.</li>
+    </ul>
+    <a class="back-top" href="#top">&uarr; Back to Top</a>
+  </section>
+
+  <hr>
+
+  <section id="method">
+    <h2>Method</h2>
+    <p>Data preparation converts polymer SMILES (PSMILES) from the PI1M dataset into Pseudo-polymer SELFIES (PSELFIES) strings and molecular graphs via RDKit and PyTorch Geometric, yielding <strong>988,223 paired representations</strong> for pretraining.</p>
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="step-badge">1</div>
+        <div class="step-body">
+          <strong>Multimodal Pretraining</strong>
+          <p>A 4-layer GCN encodes molecular graphs (residual GCNConv blocks, global mean+max pooling). A 4-layer Transformer encoder processes tokenized PSELFIES. Both are projected into a shared 256-dim latent space and aligned with InfoNCE loss. A Transformer decoder reconstructs PSELFIES autoregressively (VAE-style), serving as a backtranslation mechanism to refine the encoder.</p>
+          <span class="tag">7.84M params &middot; NVIDIA A100 &middot; 10 epochs &middot; AdamW</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-badge">2</div>
+        <div class="step-body">
+          <strong>Multi-task Property Prediction</strong>
+          <p>Morgan fingerprints (dim=2048) feed a 3-layer shared MLP with 8 property-specific 2-layer heads. Labels from the Khazana dataset (6,264 DFT entries). Properties: Atomization Energy, Crystallization Tendency, Band Gap (chain &amp; bulk), Electron Affinity, Ionization Energy, Refractive Index, Dielectric Constant.</p>
+          <span class="tag">Multi-task MSE &middot; AdamW &middot; early stop at epoch 126</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-badge">3</div>
+        <div class="step-body">
+          <strong>Latent Space Similarity Search &amp; Filtering</strong>
+          <p>PLGA is encoded as the reference anchor. k=100 nearest neighbors are retrieved (92.59&ndash;97.52% similarity). Candidates with Ertl-Schuffenhauer synthetic accessibility score &ge; 5 are removed. Tanimoto fingerprint similarities computed on remaining candidates.</p>
+          <span class="tag">k-NN &middot; SA Score &le; 5 &middot; Tanimoto Similarity</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-badge">4</div>
+        <div class="step-body">
+          <strong>RAG-based Clustering</strong>
+          <p>SMILES fingerprints, SELFIES, and textual descriptions from ChEBI-20-MM are embedded (OpenAI text-embedding-3-small) and stored in Weaviate. GPT-5 extracts motif signatures and clusters 91 filtered candidates into 8 interpretable polymer families. Human correction rate: 2/91 (97.8% inter-annotator agreement).</p>
+          <span class="tag">Weaviate &middot; GPT-5 &middot; 8 Clusters &middot; 97.8% Agreement</span>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="step-badge">5</div>
+        <div class="step-body">
+          <strong>In Vitro Wound Healing Validation</strong>
+          <p>DSS-protamine nanoparticles loaded with rhEGF applied to dip-coated silk fibroin sutures (PLGA, LA-TMC, PLLA-PCL). Sutures placed across scratch wounds in confluent HEKa monolayers. Supernatant sampled at 0h and 48h via EGF ELISA (450nm); Ki-67 immunofluorescence performed at 0h, 48h, 72h, and Day 10.</p>
+          <span class="tag">HEKa &middot; ELISA &middot; Ki-67 &middot; BSL-1 Lab</span>
+        </div>
+      </div>
+    </div>
+    <a class="back-top" href="#top">&uarr; Back to Top</a>
+  </section>
+
+  <hr>
+
+  <section id="results">
+    <h2>Results &#128202;</h2>
+    <p>Across all axes&mdash;payload retention, controlled release kinetics, and targeted keratinocyte proliferation&mdash;the AI-discovered <strong>LA-TMC</strong> (poly(l-lactide-co-trimethylene carbonate)) coating substantially outperforms both the PLGA baseline and the PLLA-PCL candidate.</p>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">+330%</div>
+        <div class="stat-label">rhEGF concentration increase with LA-TMC (0h &rarr; 48h)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">&minus;86%</div>
+        <div class="stat-label">rhEGF loss with PLGA baseline (0h &rarr; 48h)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">&minus;93%</div>
+        <div class="stat-label">rhEGF loss with PLLA-PCL (0h &rarr; 48h)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3.3&times;</div>
+        <div class="stat-label">rhEGF concentration vs. state-of-the-art at 48h</div>
+      </div>
+    </div>
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Polymer Coating</th>
+          <th>rhEGF 0h (ng/mL)</th>
+          <th>rhEGF 48h (ng/mL)</th>
+          <th>Change</th>
+          <th>Keratinocyte Binding (48h)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>PLGA (baseline)</td>
+          <td>0.398</td>
+          <td>0.056</td>
+          <td style="color:#b71c1c;font-weight:600">&minus;86%</td>
+          <td>Poor</td>
+        </tr>
+        <tr>
+          <td>PLLA-PCL</td>
+          <td>0.373</td>
+          <td>0.025</td>
+          <td style="color:#b71c1c;font-weight:600">&minus;93%</td>
+          <td>Moderate</td>
+        </tr>
+        <tr>
+          <td class="best">LA-TMC (discovered)</td>
+          <td class="best">0.064</td>
+          <td class="best">0.210</td>
+          <td class="best">+330%</td>
+          <td class="best">Strong &mdash; targeted</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>LA-TMC was the <strong>sole polymer coating</strong> that facilitated controlled and sustained release. Its low 0h supernatant concentration indicates strong payload retention within the nanoparticle-polymer matrix, with controlled efflux over 48h&mdash;the ideal profile for therapeutic delivery without burst-induced hyperconcentration.</p>
+    <a class="back-top" href="#top">&uarr; Back to Top</a>
+  </section>
+
+  <hr>
+
+  <section id="elisa">
+    <h2>ELISA &amp; Immunofluorescence</h2>
+    <p>To quantify rhEGF release, 250&micro;L supernatant samples at 0h and 48h were flash-frozen at &minus;80&deg;C, then distributed into 12 wells (with duplicates). Absorbance was read at 450nm; a quadratic regression calibration curve (R&sup2;=0.9745) converted absorbances to EGF concentrations.</p>
+    <figure>
+      <div class="fig-placeholder">
+        <div style="font-size:24px;margin-bottom:10px;">&#128202;</div>
+        <strong style="display:block;color:#444;margin-bottom:4px;">Figure 3 &mdash; EGF ELISA Results (0h &rarr; 48h)</strong>
+      <img src="assets/elisa.jpg" alt="EGF ELISA Analysis" style="max-width:100%;border:1px solid #ddd;border-radius:4px;" />
+      <figcaption><strong>Figure 3.</strong> EGF ELISA analysis for each polymeric suture topcoat from 0h &rarr; 48h. LA-TMC demonstrates a clear increase in EGF concentration consistent with controlled release mechanics, while PLGA and PLLA-PCL exhibit substantial payload loss into the supernatant.</figcaption>
+    </figure>
+    <p>Immunofluorescence with the Ki-67 monoclonal antibody (1:200 in BSA blocking buffer) was performed at 48h, 72h, and Day 10. Ki-67 marks actively proliferating cells in mitosis or G&#8322; phase via MKI67 gene activation, providing a direct readout of keratinocyte growth at the wound bed.</p>
+    <figure>
+      <div class="fig-placeholder">
+      <img src="assets/immunofluorescence.jpg" alt="Ki-67 Immunofluorescence" style="max-width:100%;border:1px solid #ddd;border-radius:4px;" />
+      <figcaption><strong>Figure 2.</strong> Immunofluorescence imaging of wound-healing assays at 48h, 72h, and 10 days. LA-TMC shows a wider region of Ki-67&ndash;positive cell activity toward the wound bed, visible keratinocyte binding to the suture at 48h, and mediated cell migration at 72h. PLGA and PLLA-PCL exhibit diffuse, uncontrolled proliferation patterns.</figcaption>
+    </figure>
+    <p>ATR-FTIR spectroscopy on the DSS-protamine nanoparticle complex confirmed ion-pairing between DSS sulfate groups and protamine's arginine guanidinium chains at 1641.56, 1546.32, and 1123.41 cm&sup1;, forming an anionic electrostatic microenvironment for cationic rhEGF retention. LA-TMC's unique C=O peak broadening (1740&ndash;1760 cm&sup1;) indicates a more polar, interaction-permissive surface for sustained rhEGF-to-EGFR signaling.</p>
+    <a class="back-top" href="#top">&uarr; Back to Top</a>
+  </section>
+
+  <hr>
+
+  <section id="discussion">
+    <h2>Discussion</h2>
+    <p>GenPoly demonstrates that multimodal foundation models can discover polymer coating families beyond the well-explored PLGA/PGA/PLA space, with direct experimental translation. The LA-TMC family&mdash;a carbonate-containing polymer with the &ndash;O&ndash;C(=O)&ndash;O&ndash; motif&mdash;was not among standard suture coating candidates in the literature, yet outperforms them on every measured metric.</p>
+    <p>Several directions could extend this work:</p>
+    <ul class="highlight-list">
+      <li><strong>Richer property supervision:</strong> incorporating solubility, tensile strength, and degradation rate would sharpen candidate filtering and reduce the wet-lab funnel.</li>
+      <li><strong>Property-guided decoding:</strong> latent diffusion or classifier guidance during SELFIES decoding could steer generation toward desired property profiles rather than relying solely on post-hoc filtering.</li>
+      <li><strong>Larger corpora &amp; synthetic data:</strong> PI1M provides ~1M polymers; curated synthetic generation could expand coverage of underexplored chemical space.</li>
+      <li><strong>In vivo validation:</strong> accelerated wound closure observed in vitro motivates future studies on suture removal timing and bacterial exposure in animal wound models.</li>
+    </ul>
+    <p>GenPoly is general-purpose: the same pipeline applies to scaffold discovery for in situ tissue regeneration, drug-eluting stents, biodegradable implants, and other biomedical polymer applications.</p>
+    <a class="back-top" href="#top">&uarr; Back to Top</a>
+  </section>
+
+  <hr>
+
+  <section id="paper">
+    <h2>Full Paper</h2>
+    <div class="pdf-wrap">
+      <div class="pdf-bar">
+        <span>GenPoly_ICLR_GEM2026.pdf</span>
+        <a href="assets/GenPoly_ICLR_GEM2026.pdf" download>&darr; Download</a>
+      </div>
+      <iframe class="pdf" src="assets/GenPoly_ICLR_GEM2026.pdf" title="GenPoly Paper PDF"></iframe>
+    </div>
+    <a class="back-top" href="#top">&uarr; Back to Top</a>
+  </section>
+
+  <hr>
+
+  <section id="bibtex">
+    <h2>BibTeX</h2>
+    <div class="bibtex">@inproceedings{
+ramji2026discovery,
+title={Discovery of Bioresorbable Polymer Suture Coatings for Controlled Tissue Regeneration with Multimodal Foundation Models},
+author={Raghav Ramji},
+booktitle={ICLR 2026 Workshop on Generative and Experimental Perspectives for Biomolecular Design},
+year={2026},
+url={https://openreview.net/forum?id=CM3PHnZRg0}
+}</div>
+    <a class="back-top" href="#top">&uarr; Back to Top</a>
+  </section>
+
+</div>
+
+<footer>
+  Accepted at <a href="https://iclr.cc" target="_blank">ICLR</a>
+  Generative and Experimental Perspectives for Biomolecular Design (GEM) Workshop 2026
+  &nbsp;&middot;&nbsp; Raghav 
