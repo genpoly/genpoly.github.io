@@ -139,15 +139,15 @@
 
   <section id="intro">
     <h2>Introduction</h2>
-    <p>Therapeutic sutures can localize bioactive payloads directly to wound sites, offering a compelling alternative to systemic delivery. However, <strong>burst release</strong>, where the payload is rapidly emitted upon implantation&mdash;overwhelms cell differentiation cascades, while mechanically fragile coatings lose shape integrity, both increasing infection susceptibility and impairing healing.</p>
+    <p>Therapeutic sutures can localize bioactive payloads directly to wound sites, offering a compelling alternative to systemic delivery. However, <strong>burst release</strong>, where the payload is rapidly emitted upon implantation, overwhelms cell differentiation, while mechanically fragile coatings lose shape integrity, both increasing infection susceptibility and impairing healing.</p>
     <p>State-of-the-art suture coatings rely predominantly on poly(lactide-co-glycolide) (PLGA) and related linear aliphatic polyesters (PGA, PLA). While their biocompatibility and biodegradability are well-established, the combinatorial space of candidate polymers is vast, and systematic exploration beyond this narrow family has remained limited.</p>
-    <p>We introduce <strong>GenPoly</strong>, an end-to-end data-driven framework for bioresorbable polymer discovery. Starting from PLGA as a clinically prevalent baseline, GenPoly:</p>
+    <p>We introduce <strong>GenPoly</strong>, an end-to-end data-driven framework for bioresorbable polymer discovery. Starting from PLGA as a clinically prevalent baseline, the key contributions of GenPoly:</p>
     <ul class="highlight-list">
-      <li>Trains a <strong>multimodal foundation model</strong> jointly over polymer SELFIES strings and molecular graphs via contrastive alignment (CLIP-style InfoNCE).</li>
-      <li>Performs <strong>multi-task property prediction</strong> over 8 physical and electronic properties from DFT-derived labels (Khazana dataset).</li>
-      <li>Identifies candidate coatings via <strong>latent-space nearest-neighbor search</strong> and synthetic accessibility filtering.</li>
-      <li>Clusters candidates using a <strong>RAG pipeline</strong> (GPT-5 + Weaviate) into 8 interpretable polymer families.</li>
-      <li>Validates top candidates in an <strong>in vitro human keratinocyte wound model</strong> using nanoparticle-loaded silk sutures with rhEGF payload.</li>
+      <li>Training a <strong>multimodal foundation model</strong> jointly over polymer SELFIES strings and molecular graphs via contrastive alignment (CLIP-style InfoNCE).</li>
+      <li>Performing <strong>multi-task property prediction</strong> over 8 physical and electronic properties from DFT-derived labels (Khazana dataset).</li>
+      <li>Identifying candidate coatings via <strong>latent-space nearest-neighbor search</strong> and synthetic accessibility filtering.</li>
+      <li>Clustering candidates using a <strong>RAG pipeline</strong> (GPT-5 + Weaviate) into 8 interpretable polymer families.</li>
+      <li>Validating top candidates in an <strong>in vitro human keratinocyte wound model</strong> using nanoparticle-loaded silk sutures with rhEGF payload.</li>
     </ul>
     <a class="back-top" href="#top">&uarr; Back to Top</a>
   </section>
@@ -162,7 +162,7 @@
         <div class="step-badge">1</div>
         <div class="step-body">
           <strong>Multimodal Pretraining</strong>
-          <p>A 4-layer GCN encodes molecular graphs (residual GCNConv blocks, global mean+max pooling). A 4-layer Transformer encoder processes tokenized PSELFIES. Both are projected into a shared 256-dim latent space and aligned with InfoNCE loss. A Transformer decoder reconstructs PSELFIES autoregressively (VAE-style), serving as a backtranslation mechanism to refine the encoder.</p>
+          <p>A 4-layer GCN encodes molecular graphs (residual GCNConv blocks, global mean and max pooling). A 4-layer Transformer encoder processes tokenized PSELFIES. Both are projected into a shared 256-dim latent space and aligned contrastively with an InfoNCE loss. A Transformer decoder reconstructs PSELFIES autoregressively (VAE-style), serving as a backtranslation mechanism to refine the encoder.</p>
           <span class="tag">7.84M params &middot; NVIDIA A100 &middot; 10 epochs &middot; AdamW</span>
         </div>
       </div>
@@ -178,7 +178,7 @@
         <div class="step-badge">3</div>
         <div class="step-body">
           <strong>Latent Space Similarity Search &amp; Filtering</strong>
-          <p>PLGA is encoded as the reference anchor. k=100 nearest neighbors are retrieved (92.59&ndash;97.52% similarity). Candidates with Ertl-Schuffenhauer synthetic accessibility score &ge; 5 are removed. Tanimoto fingerprint similarities computed on remaining candidates.</p>
+          <p>PLGA is encoded as the reference anchor, and k=100 nearest neighbors are retrieved (92.59&ndash;97.52% similarity). Candidates with Ertl-Schuffenhauer synthetic accessibility score &ge; 5 are removed. Tanimoto fingerprint similarities computed on remaining candidates.</p>
           <span class="tag">k-NN &middot; SA Score &le; 5 &middot; Tanimoto Similarity</span>
         </div>
       </div>
@@ -186,7 +186,7 @@
         <div class="step-badge">4</div>
         <div class="step-body">
           <strong>RAG-based Clustering</strong>
-          <p>SMILES fingerprints, SELFIES, and textual descriptions from ChEBI-20-MM are embedded (OpenAI text-embedding-3-small) and stored in Weaviate. GPT-5 extracts motif signatures and clusters 91 filtered candidates into 8 interpretable polymer families. Human correction rate: 2/91 (97.8% inter-annotator agreement).</p>
+          <p>SMILES fingerprints, SELFIES, and textual descriptions from ChEBI-20-MM are embedded (OpenAI text-embedding-3-small) and stored in a vector database. GPT-5 extracts motif signatures and clusters 91 filtered candidates into 8 interpretable polymer families.</p>
           <span class="tag">Weaviate &middot; GPT-5 &middot; 8 Clusters &middot; 97.8% Agreement</span>
         </div>
       </div>
@@ -194,7 +194,7 @@
         <div class="step-badge">5</div>
         <div class="step-body">
           <strong>In Vitro Wound Healing Validation</strong>
-          <p>DSS-protamine nanoparticles loaded with rhEGF applied to dip-coated silk fibroin sutures (PLGA, LA-TMC, PLLA-PCL). Sutures placed across scratch wounds in confluent HEKa monolayers. Supernatant sampled at 0h and 48h via EGF ELISA (450nm); Ki-67 immunofluorescence performed at 0h, 48h, 72h, and Day 10.</p>
+          <p>DSS-protamine nanoparticles loaded with rhEGF were applied to dip-coated silk fibroin sutures (PLGA, LA-TMC, PLLA-PCL). Sutures were placed across scratch wounds in confluent HEKa monolayers. The supernatant was sampled at 0h and 48h via EGF ELISA (450nm); Ki-67 immunofluorescence was performed at 0h, 48h, 72h, and Day 10.</p>
           <span class="tag">HEKa &middot; ELISA &middot; Ki-67 &middot; BSL-1 Lab</span>
         </div>
       </div>
@@ -206,7 +206,7 @@
 
   <section id="results">
     <h2>Results</h2>
-    <p>Across payload retention, controlled release kinetics, and targeted keratinocyte proliferation;the model-discovered<strong>LA-TMC</strong> (poly(l-lactide-co-trimethylene carbonate)) coating substantially outperforms both the PLGA baseline and the PLLA-PCL candidate.</p>
+    <p>Across payload retention, controlled release kinetics, and targeted keratinocyte proliferation;the model-discovered <strong>LA-TMC</strong> (poly(l-lactide-co-trimethylene carbonate)) coating substantially outperforms both the PLGA baseline and the PLLA-PCL candidate.</p>
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-num">+330%</div>
@@ -289,15 +289,8 @@
 
   <section id="discussion">
     <h2>Discussion</h2>
-    <p>GenPoly demonstrates that multimodal foundation models can discover polymer coating families beyond the well-explored PLGA/PGA/PLA space, with direct experimental translation. The LA-TMC family&mdash;a carbonate-containing polymer with the &ndash;O&ndash;C(=O)&ndash;O&ndash; motif&mdash;was not among standard suture coating candidates in the literature, yet outperforms them on every measured metric.</p>
-    <p>Several directions could extend this work:</p>
-    <ul class="highlight-list">
-      <li><strong>Enhanced property supervision:</strong> incorporating solubility, tensile strength, and degradation rate would sharpen candidate filtering and reduce the wet-lab funnel.</li>
-      <li><strong>Property-guided decoding:</strong> latent diffusion or classifier guidance during SELFIES decoding could steer generation toward desired property profiles rather than relying solely on post-hoc filtering.</li>
-      <li><strong>Larger corpora &amp; synthetic data:</strong> PI1M provides ~1M polymers; curated synthetic generation could expand coverage of underexplored chemical space.</li>
-      <li><strong>In vivo validation:</strong> accelerated wound closure observed in vitro motivates future studies on suture removal timing and bacterial exposure in animal wound models.</li>
-    </ul>
-    <p>GenPoly is general-purpose: the same pipeline applies to scaffold discovery for in situ tissue regeneration, drug-eluting stents, biodegradable implants, and other biomedical polymer applications.</p>
+    <p>GenPoly demonstrates that multimodal foundation models can be used to discover polymer coating families beyond traditionally explored linear aliphatic polyesters, with direct experimental translation. The LA-TMC family, a carbonate-containing polymer with the &ndash;O&ndash;C(=O)&ndash;O&ndash; motif, outperforms them across the board.</p>
+    <p>GenPoly is general-purpose: the same pipeline applies to scaffold discovery for other in situ tissue regeneration settings and various biomedical polymer applications.</p>
     <a class="back-top" href="#top">&uarr; Back to Top</a>
   </section>
 
