@@ -93,10 +93,10 @@
 <div class="page" id="top">
 
   <header>
-    <div class="venue">Accepted &middot; ICLR GEM Workshop 2026</div>
+    <div class="venue">Accepted &middot; ICLR GEM 2026</div>
     <h1>Discovery of Bioresorbable Polymer Suture Coatings for Controlled Tissue Regeneration with Multimodal Foundation Models</h1>
     <div class="authors">
-      <a href="/cdn-cgi/l/email-protection#e89a898f80899ec69a89858281a88f9a8d8d869f818b809b8b808787849bc6879a8f">Raghav Ramji</a>
+      <a href="raghav.ramji@greenwichschools.org">Raghav Ramji</a>
     </div>
     <div class="affiliation">Greenwich High School</div>
     <div class="links">
@@ -119,7 +119,7 @@
     <figure>
       <img src="assets/pipeline.jpg" alt="GenPoly Pipeline Overview" style="max-width:100%;border:1px solid #ddd;border-radius:4px;" />
       <figcaption>
-        <strong>Figure 1.</strong> GenPoly is an end-to-end pipeline for bioresorbable polymer discovery: a multimodal foundation model pretrained over paired PSELFIES strings and molecular graphs, coupled with multi-task property prediction, RAG-based candidate filtering and clustering, and in vitro validation on nanoparticle-loaded silk sutures with a human keratinocyte wound model.
+        <strong>Figure 1.</strong> GenPoly is an end-to-end pipeline for bioresorbable polymer discovery for regenerative medicine applications. We pre-train a multimodal foundation model over paired PSELFIES strings and molecular graphs, and polymers are discovered through latent space nearest-neighbor search, narrowed down using multi-task property prediction and RAG-based candidate filtering and clustering. The polymers are then in vitro validation on nanoparticle-loaded silk sutures with a human keratinocyte wound model.
       </figcaption>
     </figure>
   </div>
@@ -139,7 +139,7 @@
 
   <section id="intro">
     <h2>Introduction</h2>
-    <p>Therapeutic sutures can localize bioactive payloads directly to wound sites, offering a compelling alternative to systemic delivery. However, <strong>burst release</strong>&mdash;the rapid, uncontrolled efflux of payload upon implantation&mdash;overwhelms cell differentiation cascades, while mechanically fragile coatings lose shape integrity, both increasing infection susceptibility and impairing healing.</p>
+    <p>Therapeutic sutures can localize bioactive payloads directly to wound sites, offering a compelling alternative to systemic delivery. However, <strong>burst release</strong>, where the payload is rapidly emitted upon implantation&mdash;overwhelms cell differentiation cascades, while mechanically fragile coatings lose shape integrity, both increasing infection susceptibility and impairing healing.</p>
     <p>State-of-the-art suture coatings rely predominantly on poly(lactide-co-glycolide) (PLGA) and related linear aliphatic polyesters (PGA, PLA). While their biocompatibility and biodegradability are well-established, the combinatorial space of candidate polymers is vast, and systematic exploration beyond this narrow family has remained limited.</p>
     <p>We introduce <strong>GenPoly</strong>, an end-to-end data-driven framework for bioresorbable polymer discovery. Starting from PLGA as a clinically prevalent baseline, GenPoly:</p>
     <ul class="highlight-list">
@@ -205,8 +205,8 @@
   <hr>
 
   <section id="results">
-    <h2>Results &#128202;</h2>
-    <p>Across all axes&mdash;payload retention, controlled release kinetics, and targeted keratinocyte proliferation&mdash;the AI-discovered <strong>LA-TMC</strong> (poly(l-lactide-co-trimethylene carbonate)) coating substantially outperforms both the PLGA baseline and the PLLA-PCL candidate.</p>
+    <h2>Results</h2>
+    <p>Across payload retention, controlled release kinetics, and targeted keratinocyte proliferation;the model-discovered<strong>LA-TMC</strong> (poly(l-lactide-co-trimethylene carbonate)) coating substantially outperforms both the PLGA baseline and the PLLA-PCL candidate.</p>
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-num">+330%</div>
@@ -292,7 +292,7 @@
     <p>GenPoly demonstrates that multimodal foundation models can discover polymer coating families beyond the well-explored PLGA/PGA/PLA space, with direct experimental translation. The LA-TMC family&mdash;a carbonate-containing polymer with the &ndash;O&ndash;C(=O)&ndash;O&ndash; motif&mdash;was not among standard suture coating candidates in the literature, yet outperforms them on every measured metric.</p>
     <p>Several directions could extend this work:</p>
     <ul class="highlight-list">
-      <li><strong>Richer property supervision:</strong> incorporating solubility, tensile strength, and degradation rate would sharpen candidate filtering and reduce the wet-lab funnel.</li>
+      <li><strong>Enhanced property supervision:</strong> incorporating solubility, tensile strength, and degradation rate would sharpen candidate filtering and reduce the wet-lab funnel.</li>
       <li><strong>Property-guided decoding:</strong> latent diffusion or classifier guidance during SELFIES decoding could steer generation toward desired property profiles rather than relying solely on post-hoc filtering.</li>
       <li><strong>Larger corpora &amp; synthetic data:</strong> PI1M provides ~1M polymers; curated synthetic generation could expand coverage of underexplored chemical space.</li>
       <li><strong>In vivo validation:</strong> accelerated wound closure observed in vitro motivates future studies on suture removal timing and bacterial exposure in animal wound models.</li>
